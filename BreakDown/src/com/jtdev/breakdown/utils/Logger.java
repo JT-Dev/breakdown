@@ -20,6 +20,6 @@ public class Logger
 
     public void log(String message)
     {
-        if (Constants.DEBUG) Gdx.app.log(className, message);
+        if (Constants.DEBUG_LOG) Gdx.app.log(className, message);
     }
 }

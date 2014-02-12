@@ -8,7 +8,7 @@ public class MainDesktop
 	public static void main(String[] args) {
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		cfg.title = "Break Down";
-        cfg.vSyncEnabled = true;
+        //cfg.vSyncEnabled = true;
 		cfg.useGL20 = false;
 		cfg.width = 680;
 		cfg.height = 380;

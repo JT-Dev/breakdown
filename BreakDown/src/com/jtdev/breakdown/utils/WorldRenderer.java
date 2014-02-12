@@ -35,7 +35,7 @@ public class WorldRenderer
         batch = new SpriteBatch();
         //debugBatch = new SpriteBatch();
 
-        if (Constants.DEBUG)
+        if (Constants.DEBUG_DRAW)
         {
             shapeRenderer = new ShapeRenderer();
 
@@ -49,20 +49,21 @@ public class WorldRenderer
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
-        if (Constants.DEBUG)
+        //batch.getProjectionMatrix().setToOrtho2D(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
+        //batch.setProjectionMatrix(world.getCamera().combined);
+        batch.begin();
+        world.draw(batch);
+        batch.end();
+
+        if (Constants.DEBUG_DRAW)
         {
-            shapeRenderer.setProjectionMatrix(world.getCamera().combined);
+            //shapeRenderer.setProjectionMatrix(world.getCamera().combined);
             world.debugDraw(shapeRenderer);
 
-            batch.getProjectionMatrix().setToOrtho2D(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
             batch.begin();
             debugFont.draw(batch, String.valueOf(Gdx.graphics.getFramesPerSecond()),10,Constants.SCREEN_HEIGHT - 10);
             batch.end();
         }
-        batch.setProjectionMatrix(world.getCamera().combined);
-        batch.begin();
-        world.draw(batch);
-        batch.end();
     }
 
     public void pause()

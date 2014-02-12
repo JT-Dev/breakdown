@@ -35,10 +35,10 @@ public class EntityManager
         removeWallArray = new ArrayList<Wall>();
 
         spawnTimeout = 0;
-        //if (Constants.DEBUG) createWall(0,0);
+        //if (Constants.DEBUG_DRAW) createWall(0,0);
     }
 
-    public void update(Camera camera)
+    public void update()
     {
         background.update();
         player.update();
@@ -61,7 +61,7 @@ public class EntityManager
         removeWallArray.clear();
     }
 
-    public void draw(SpriteBatch batch, Camera camera)
+    public void draw(SpriteBatch batch)
     {
         background.draw(batch);
         player.draw(batch);
@@ -70,6 +70,7 @@ public class EntityManager
 
     public void debugDraw(ShapeRenderer shapeRenderer)
     {
+        background.debugDraw(shapeRenderer);
         player.debugDraw(shapeRenderer);
         for (Wall wall: wallArray) wall.debugDraw(shapeRenderer);
     }
@@ -81,7 +82,7 @@ public class EntityManager
         float cameraX2 = (camera.position.x + camera.viewportWidth / 2);
         float cameraY2 = (camera.position.y + camera.viewportHeight / 2);
 
-        float x,y = 0;
+        float x,y;
         do
         {
             x = MathUtils.random(cameraX1 - Constants.WALL_SPAWN_RANGE, cameraX2 + Constants.WALL_SPAWN_RANGE);

@@ -18,8 +18,6 @@ import com.jtdev.breakdown.utils.Profile;
  */
 public class World
 {
-    private OrthographicCamera camera;
-
     private Profile profile;
     private EntityManager entityManager;
     private FileManager fileManager;
@@ -38,12 +36,6 @@ public class World
     {
         logger.log("Creating Objects");
 
-        camera = new OrthographicCamera();
-        camera.setToOrtho(true, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
-        camera.position.set(Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 2, 0);
-
-        //player = new Player(Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 2);
-
         //fileManager = new FileManager(this);
         //profile = fileManager.getProfile();
 
@@ -56,7 +48,7 @@ public class World
     {
         if (Constants.TOUCHSCREEN) updateTouchScreen();
         else updateKeys();
-        entityManager.update(camera);
+        entityManager.update();
     }
 
     private void updateKeys()
@@ -69,7 +61,7 @@ public class World
 
     public void draw(SpriteBatch batch)
     {
-        entityManager.draw(batch, camera);
+        entityManager.draw(batch);
     }
 
     public void debugDraw(ShapeRenderer shapeRenderer)
@@ -91,8 +83,6 @@ public class World
     {
         logger.log("Disposing World");
     }
-
-    public OrthographicCamera getCamera() { return camera; }
 
     public FileManager getFileManager() { return fileManager; }
     public Profile getProfile() { return profile; }

@@ -3,8 +3,9 @@ package com.jtdev.breakdown.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.jtdev.breakdown.Constants;
 import com.jtdev.breakdown.Main;
@@ -20,9 +21,13 @@ public class SplashScreen implements Screen
     private final Main main;
     private SpriteBatch spriteBatch;
     private long startTime;
+    private TextureRegion image;
 
     public SplashScreen(Main main)
     {
+        Texture texture = new Texture(Constants.SPLASH_IMAGE_PATH);
+        image = new TextureRegion(texture, Constants.SPLASH_WIDTH, Constants.SPLASH_HEIGHT);
+
         this.main = main;
     }
 
@@ -31,7 +36,7 @@ public class SplashScreen implements Screen
     {
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
         spriteBatch.begin();
-        spriteBatch.draw(Constants.SPLASH_IMAGE, 0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
+        spriteBatch.draw(image, 0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
         spriteBatch.end();
 
         if (TimeUtils.millis() - startTime > Constants.SPLASH_SCREEN_TIME) main.setScreen(new GameScreen());
