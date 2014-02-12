@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_breakdown-robovm" default="compile.module.breakdown-robovm">
+  <dirname property="module.breakdown-robovm.basedir" file="${ant.file.module_breakdown-robovm}"/>
+  
+  <property name="module.jdk.home.breakdown-robovm" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.breakdown-robovm" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.breakdown-robovm" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.breakdown-robovm" value="${compiler.args}"/>
+  
+  <property name="breakdown-robovm.output.dir" value="${module.breakdown-robovm.basedir}/bin"/>
+  <property name="breakdown-robovm.testoutput.dir" value="${module.breakdown-robovm.basedir}/bin"/>
+  
+  <path id="breakdown-robovm.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="breakdown-robovm.module.production.classpath">
+    <path refid="${module.jdk.classpath.breakdown-robovm}"/>
+    <pathelement location="${breakdown.output.dir}"/>
+    <pathelement location="${basedir}/BreakDown/libs/gdx.jar"/>
+    <pathelement location="${basedir}/BreakDown-robovm/libs/gdx-backend-robovm.jar"/>
+  </path>
+  
+  <path id="breakdown-robovm.runtime.production.module.classpath">
+    <pathelement location="${breakdown-robovm.output.dir}"/>
+    <pathelement location="${breakdown.output.dir}"/>
+    <pathelement location="${basedir}/BreakDown/libs/gdx.jar"/>
+    <pathelement location="${basedir}/BreakDown-robovm/libs/gdx-backend-robovm.jar"/>
+  </path>
+  
+  <path id="breakdown-robovm.module.classpath">
+    <path refid="${module.jdk.classpath.breakdown-robovm}"/>
+    <pathelement location="${breakdown-robovm.output.dir}"/>
+    <pathelement location="${breakdown.output.dir}"/>
+    <pathelement location="${basedir}/BreakDown/libs/gdx.jar"/>
+    <pathelement location="${basedir}/BreakDown-robovm/libs/gdx-backend-robovm.jar"/>
+  </path>
+  
+  <path id="breakdown-robovm.runtime.module.classpath">
+    <pathelement location="${breakdown-robovm.output.dir}"/>
+    <pathelement location="${breakdown.output.dir}"/>
+    <pathelement location="${basedir}/BreakDown/libs/gdx.jar"/>
+    <pathelement location="${basedir}/BreakDown-robovm/libs/gdx-backend-robovm.jar"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.breakdown-robovm">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.breakdown-robovm">
+    <patternset refid="excluded.from.module.breakdown-robovm"/>
+  </patternset>
+  
+  <path id="breakdown-robovm.module.sourcepath">
+    <dirset dir="${module.breakdown-robovm.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.breakdown-robovm" depends="compile.module.breakdown-robovm.production,compile.module.breakdown-robovm.tests" description="Compile module BreakDown-robovm"/>
+  
+  <target name="compile.module.breakdown-robovm.production" depends="compile.module.breakdown" description="Compile module BreakDown-robovm; production classes">
+    <mkdir dir="${breakdown-robovm.output.dir}"/>
+    <javac destdir="${breakdown-robovm.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.breakdown-robovm}/javac">
+      <compilerarg line="${compiler.args.breakdown-robovm}"/>
+      <bootclasspath refid="breakdown-robovm.module.bootclasspath"/>
+      <classpath refid="breakdown-robovm.module.production.classpath"/>
+      <src refid="breakdown-robovm.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.breakdown-robovm"/>
+    </javac>
+    
+    <copy todir="${breakdown-robovm.output.dir}">
+      <fileset dir="${module.breakdown-robovm.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.breakdown-robovm.tests" depends="compile.module.breakdown-robovm.production" description="compile module BreakDown-robovm; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.breakdown-robovm" description="cleanup module">
+    <delete dir="${breakdown-robovm.output.dir}"/>
+    <delete dir="${breakdown-robovm.testoutput.dir}"/>
+  </target>
+</project>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_breakdown-desktop" default="compile.module.breakdown-desktop">
+  <dirname property="module.breakdown-desktop.basedir" file="${ant.file.module_breakdown-desktop}"/>
+  
+  <property name="module.jdk.home.breakdown-desktop" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.breakdown-desktop" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.breakdown-desktop" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.breakdown-desktop" value="${compiler.args}"/>
+  
+  <property name="breakdown-desktop.output.dir" value="${module.breakdown-desktop.basedir}/bin"/>
+  <property name="breakdown-desktop.testoutput.dir" value="${module.breakdown-desktop.basedir}/bin"/>
+  
+  <path id="breakdown-desktop.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="breakdown-desktop.module.production.classpath">
+    <pathelement location="${breakdown.output.dir}"/>
+    <pathelement location="${basedir}/BreakDown/libs/gdx.jar"/>
+    <path refid="${module.jdk.classpath.breakdown-desktop}"/>
+    <pathelement location="${basedir}/BreakDown-desktop/libs/gdx-backend-lwjgl.jar"/>
+    <pathelement location="${basedir}/BreakDown-desktop/libs/gdx-backend-lwjgl-natives.jar"/>
+    <pathelement location="${basedir}/BreakDown-desktop/libs/gdx-natives.jar"/>
+  </path>
+  
+  <path id="breakdown-desktop.runtime.production.module.classpath">
+    <pathelement location="${breakdown-desktop.output.dir}"/>
+    <pathelement location="${breakdown.output.dir}"/>
+    <pathelement location="${basedir}/BreakDown/libs/gdx.jar"/>
+    <pathelement location="${basedir}/BreakDown-desktop/libs/gdx-backend-lwjgl.jar"/>
+    <pathelement location="${basedir}/BreakDown-desktop/libs/gdx-backend-lwjgl-natives.jar"/>
+    <pathelement location="${basedir}/BreakDown-desktop/libs/gdx-natives.jar"/>
+  </path>
+  
+  <path id="breakdown-desktop.module.classpath">
+    <pathelement location="${breakdown-desktop.output.dir}"/>
+    <pathelement location="${breakdown.output.dir}"/>
+    <pathelement location="${basedir}/BreakDown/libs/gdx.jar"/>
+    <path refid="${module.jdk.classpath.breakdown-desktop}"/>
+    <pathelement location="${basedir}/BreakDown-desktop/libs/gdx-backend-lwjgl.jar"/>
+    <pathelement location="${basedir}/BreakDown-desktop/libs/gdx-backend-lwjgl-natives.jar"/>
+    <pathelement location="${basedir}/BreakDown-desktop/libs/gdx-natives.jar"/>
+  </path>
+  
+  <path id="breakdown-desktop.runtime.module.classpath">
+    <pathelement location="${breakdown-desktop.output.dir}"/>
+    <pathelement location="${breakdown.output.dir}"/>
+    <pathelement location="${basedir}/BreakDown/libs/gdx.jar"/>
+    <pathelement location="${basedir}/BreakDown-desktop/libs/gdx-backend-lwjgl.jar"/>
+    <pathelement location="${basedir}/BreakDown-desktop/libs/gdx-backend-lwjgl-natives.jar"/>
+    <pathelement location="${basedir}/BreakDown-desktop/libs/gdx-natives.jar"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.breakdown-desktop">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.breakdown-desktop">
+    <patternset refid="excluded.from.module.breakdown-desktop"/>
+  </patternset>
+  
+  <path id="breakdown-desktop.module.sourcepath">
+    <dirset dir="${module.breakdown-desktop.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.breakdown-desktop" depends="compile.module.breakdown-desktop.production,compile.module.breakdown-desktop.tests" description="Compile module BreakDown-desktop"/>
+  
+  <target name="compile.module.breakdown-desktop.production" depends="compile.module.breakdown" description="Compile module BreakDown-desktop; production classes">
+    <mkdir dir="${breakdown-desktop.output.dir}"/>
+    <javac destdir="${breakdown-desktop.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.breakdown-desktop}/javac">
+      <compilerarg line="${compiler.args.breakdown-desktop}"/>
+      <bootclasspath refid="breakdown-desktop.module.bootclasspath"/>
+      <classpath refid="breakdown-desktop.module.production.classpath"/>
+      <src refid="breakdown-desktop.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.breakdown-desktop"/>
+    </javac>
+    
+    <copy todir="${breakdown-desktop.output.dir}">
+      <fileset dir="${module.breakdown-desktop.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.breakdown-desktop.tests" depends="compile.module.breakdown-desktop.production" description="compile module BreakDown-desktop; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.breakdown-desktop" description="cleanup module">
+    <delete dir="${breakdown-desktop.output.dir}"/>
+    <delete dir="${breakdown-desktop.testoutput.dir}"/>
+  </target>
+</project>
