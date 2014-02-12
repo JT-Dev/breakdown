@@ -1,0 +1,52 @@
+package com.jtdev.breakdown.utils;
+
+/**
+ * Created with IntelliJ IDEA.
+ * User: AeroX2
+ * Date: 10/3/13
+ * Time: 4:22 PM
+ */
+public class Point
+{
+    public int x;
+    public int y;
+
+    public Point(int x, int y)
+    {
+        this.x = x;
+        this.y = y;
+    }
+
+    public int getY() { return y; }
+    public void setY(final int y) { this.y = y; }
+    public int getX() { return x; }
+    public void setX(final int x) { this.x = x; }
+
+    @Override
+    public boolean equals(final Object o)
+    {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        final Point point = (Point) o;
+
+        if (x != point.x) return false;
+        if (y != point.y) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        int result = x;
+        result = 31 * result + y;
+        return result;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Point [x="+x+",y="+y+"]";
+    }
+}
