@@ -9,12 +9,12 @@ import com.badlogic.gdx.math.Rectangle;
  * Date: 15/02/14
  * Time: 10:42 PM
  */
-public class Background
+public class Cloud
 {
     private Rectangle rectangle;
     private TextureRegion texture;
 
-    public Background(Rectangle rectangle, TextureRegion texture)
+    public Cloud(Rectangle rectangle, TextureRegion texture)
     {
         this.rectangle = rectangle;
         this.texture = texture;

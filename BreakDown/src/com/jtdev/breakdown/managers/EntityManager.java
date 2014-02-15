@@ -6,10 +6,9 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.jtdev.breakdown.Constants;
-import com.jtdev.breakdown.entities.Background;
+import com.jtdev.breakdown.entities.BackgroundManager;
 import com.jtdev.breakdown.entities.Player;
 import com.jtdev.breakdown.entities.Wall;
-import com.jtdev.breakdown.utils.Profile;
 
 import java.util.ArrayList;
 
@@ -22,7 +21,7 @@ import java.util.ArrayList;
 public class EntityManager
 {
     private Player player;
-    private Background background;
+    private BackgroundManager backgroundManager;
     private ArrayList<Wall> wallArray;
     private ArrayList<Wall> removeWallArray;
     private long spawnTimeout;
@@ -30,7 +29,7 @@ public class EntityManager
     public EntityManager()
     {
         this.player = new Player();
-        this.background = new Background();
+        this.backgroundManager = new BackgroundManager();
         wallArray = new ArrayList<Wall>();
         removeWallArray = new ArrayList<Wall>();
 
@@ -40,7 +39,7 @@ public class EntityManager
 
     public void update()
     {
-        background.update();
+        backgroundManager.update();
         player.update();
         for (Wall wall : wallArray)
         {
@@ -63,14 +62,14 @@ public class EntityManager
 
     public void draw(SpriteBatch batch)
     {
-        background.draw(batch);
+        backgroundManager.draw(batch);
         player.draw(batch);
         for (Wall wall: wallArray) wall.draw(batch);
     }
 
     public void debugDraw(ShapeRenderer shapeRenderer)
     {
-        background.debugDraw(shapeRenderer);
+        backgroundManager.debugDraw(shapeRenderer);
         player.debugDraw(shapeRenderer);
         for (Wall wall: wallArray) wall.debugDraw(shapeRenderer);
     }
@@ -97,8 +96,8 @@ public class EntityManager
 
     public Player getPlayer() { return player; }
     public void setPlayer(Player player) { this.player = player; }
-    public Background getBackground() { return background; }
-    public void setBackground(Background background) { this.background = background; }
+    public BackgroundManager getBackgroundManager() { return backgroundManager; }
+    public void setBackgroundManager(BackgroundManager backgroundManager) { this.backgroundManager = backgroundManager; }
     public ArrayList<Wall> getWallArray() { return wallArray; }
     public void setWallArray(ArrayList<Wall> wallArray) { this.wallArray = wallArray; }
 }
