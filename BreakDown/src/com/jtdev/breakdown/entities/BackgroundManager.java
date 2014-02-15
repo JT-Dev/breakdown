@@ -83,7 +83,7 @@ public class BackgroundManager
         if (clouds.size() < Constants.MAX_CLOUDS && MathUtils.random() < Constants.CLOUD_SPAWN_RATE)
         {
             log.log("Making cloud");
-            log.log("Cloud length: " + clouds.size());
+            log.log("Clouds array length: " + clouds.size());
             int i = MathUtils.random(0,cloudTextures.length-1);
             TextureRegion textureRegion = cloudTextures[i];
             Rectangle rectangle = new Rectangle(Constants.SCREEN_WIDTH,Constants.SCREEN_HEIGHT - (Constants.CLOUD_HEIGHT / 4),
