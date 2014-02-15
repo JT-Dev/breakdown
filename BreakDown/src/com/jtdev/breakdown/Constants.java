@@ -16,6 +16,7 @@ public class Constants
     public static int SCREEN_WIDTH = Gdx.graphics.getWidth();
     public static int SCREEN_HEIGHT = Gdx.graphics.getHeight();
     public static final boolean TOUCHSCREEN = Gdx.app.getType() == Application.ApplicationType.Android || Gdx.app.getType() == Application.ApplicationType.iOS;
+    public static final String ICON_PATH = "data/icon.png";
 
     //Images
     public static final int SPLASH_SCREEN_TIME = 2000;
