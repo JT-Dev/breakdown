@@ -1,7 +1,6 @@
 package com.jtdev.breakdown;
 
 import android.os.Bundle;
-
 import android.view.Window;
 import android.view.WindowManager;
 import com.badlogic.gdx.backends.android.AndroidApplication;

@@ -7,10 +7,11 @@ public class MainDesktop
 {
 	public static void main(String[] args) {
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-		cfg.title = "Break Down";
+		cfg.title = "BreakDown";
         //cfg.vSyncEnabled = true;
+        //cfg.addIcon(Constants.ICON_PATH, Files.FileType.Internal);
 		cfg.useGL20 = false;
-		cfg.width = 680;
+		cfg.width = 1300;
 		cfg.height = 380;
 		
 		new LwjglApplication(new Main(), cfg);
