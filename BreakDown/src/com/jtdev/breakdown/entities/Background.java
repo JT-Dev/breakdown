@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.jtdev.breakdown.Constants;
 import com.jtdev.breakdown.utils.Logger;
@@ -18,84 +19,101 @@ import com.jtdev.breakdown.utils.Logger;
  */
 public class Background
 {
-    private final Logger log;
-    private TextureRegion background1;
-    private TextureRegion background2;
-    private Rectangle rectangle1;
-    private Rectangle rectangle2;
+    private Logger log;
+    private TextureRegion[] backgrounds;
+    private Rectangle[] backgroundRectangles;
+
+    private TextureRegion[] clouds;
+    private Rectangle[] cloudRectangles;
+    private boolean moving;
+    private Color[] colors;
 
     public Background()
     {
-        this(0,0,Constants.BACKGROUND_WIDTH_1,Constants.BACKGROUND_HEIGHT_1,
-             Constants.BACKGROUND_WIDTH_1,0,Constants.BACKGROUND_WIDTH_2,Constants.BACKGROUND_HEIGHT_2);
-    }
-
-    public Background(float x1, float y1, int width1, int height1, float x2, float y2, int width2, int height2)
-    {
         log = new Logger(this);
 
-        Texture texture1 = new Texture(Gdx.files.internal(Constants.BACKGROUND_IMAGE_PATH_1));
-        texture1.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        background1 = new TextureRegion(texture1,width1,height1);
+        int backgroundNum = (int) Math.ceil((float) Constants.SCREEN_WIDTH / (float) Constants.BACKGROUND_WIDTH) * 2;
+        log.log("Number of backgrounds: " + backgroundNum);
+        backgrounds = new TextureRegion[backgroundNum];
+        backgroundRectangles = new Rectangle[backgroundNum];
+        colors = new Color[backgroundNum];
+        for (int i = 0; i < backgroundNum; i++)
+        {
+            Texture texture = new Texture(Gdx.files.internal(Constants.BACKGROUND_IMAGE_PATH));
+            texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+            backgrounds[i] = new TextureRegion(texture,Constants.BACKGROUND_WIDTH,Constants.BACKGROUND_HEIGHT);
+            if (i % 2 == 0) backgrounds[i].flip(true,false);
+            backgroundRectangles[i] = new Rectangle(i * Constants.BACKGROUND_WIDTH, 0, Constants.BACKGROUND_WIDTH, Constants.BACKGROUND_HEIGHT);
+            colors[i] = new Color(MathUtils.random(),MathUtils.random(),MathUtils.random(),0);
+        }
 
-        Texture texture2 = new Texture(Gdx.files.internal(Constants.BACKGROUND_IMAGE_PATH_2));
-        texture2.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        background2 = new TextureRegion(texture2,width2,height2);
+        /*clouds = new TextureRegion[Constants.AMOUNT_OF_CLOUDS];
+        for (int i = 0; i <= Constants.AMOUNT_OF_CLOUDS; i++)
+        {
+            Texture texture = new Texture(Gdx.files.internal(Constants.CLOUD_PATH +i+".png"));
+            texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+            //clouds[i] = new TextureRegion(texture,Constants.)
 
-        this.rectangle1 = new Rectangle(x1,y1,width1,height2);
-        this.rectangle2 = new Rectangle(x2,y2,width2,height2);
+        }*/
+
+        //TODO Don't set true here
+        moving = true;
     }
 
     public void update()
     {
-        addX1(-Constants.BACKGROUND_SPEED_1);
-        addX2(-Constants.BACKGROUND_SPEED_2);
-
-        if (getX1()+getWidth1() < 0) setX1(getX2()+getWidth2());
-        if (getX2()+getWidth2() < 0) setX2(getX1()+getWidth1());
-
-        //log.log("X1: " + getX1());
-        //log.log("X2: " + getX2());
+        for (int i = 0; i < backgrounds.length; i++)
+        {
+            if (getBackgroundX(i)+ getBackgroundWidth(i) <= 0)
+            {
+                setBackgroundX(i, getBackgroundX(i) + (Constants.BACKGROUND_WIDTH * backgrounds.length));// + getBackgroundWidth(backgrounds.length - 1 - i));
+            }
+            addBackgroundX(i, -Constants.BACKGROUND_SPEED);
+        }
     }
 
     public void draw(SpriteBatch batch)
     {
-        batch.draw(background1,getX1(),getY1(),getWidth1(),Constants.SCREEN_HEIGHT);
-        batch.draw(background2,getX2(),getY2(),getWidth2(),Constants.SCREEN_HEIGHT);
+        if (moving)
+        {
+            for (int i = 0; i < backgrounds.length; i++)
+            {
+                batch.draw(backgrounds[i],backgroundRectangles[i].getX(),backgroundRectangles[i].getY(), getBackgroundWidth(i),Constants.SCREEN_HEIGHT);
+            }
+            //int i = MathUtils.random(0,clouds.length-1);
+            //for (int i = 0; i <= backgrounds.length-1; i++) batch.draw(backgrounds[i],getBackgroundWidth(i),Constants.SCREEN_HEIGHT);
+        }
     }
 
     public void debugDraw(ShapeRenderer shapeRenderer)
     {
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(Color.RED);
-        shapeRenderer.rect(getX1(),getY1(),getWidth1(),getHeight1());
-        shapeRenderer.setColor(Color.BLUE);
-        shapeRenderer.rect(getX2(),getY2(),getWidth2(),getHeight2());
-        shapeRenderer.end();
+        if (moving)
+        {
+            for (int i = 0; i < backgrounds.length; i++)
+            {
+                shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+                shapeRenderer.setColor(colors[i]);
+                shapeRenderer.rect(getBackgroundX(i), getBackgroundY(i), getBackgroundWidth(i), getBackgroundHeight(i));
+                shapeRenderer.end();
+            }
+            //int i = MathUtils.random(0,clouds.length-1);
+            //for (int i = 0; i <= backgrounds.length-1; i++) batch.draw(backgrounds[i],getBackgroundWidth(i),Constants.SCREEN_HEIGHT);
+        }
     }
 
-    public float getX1() { return rectangle1.getX(); }
-    public float getY1() { return rectangle1.getY(); }
-    public void setX1(float x1) { rectangle1.setX(x1); }
-    public void setY1(float y1) { rectangle1.setY(y1); }
+    public float getBackgroundX(int background) { return backgroundRectangles[background].getX(); }
+    public float getBackgroundY(int background) { return backgroundRectangles[background].getY(); }
+    public void setBackgroundX(int background, float x) { backgroundRectangles[background].setX(x); }
+    public void setBackgroundY(int background, float y) { backgroundRectangles[background].setY(y); }
 
-    public void addX1(float x1) { setX1(getX1()+x1); }
-    public void addX2(float x2) { setX2(getX2()+x2); }
-    public void addY1(float y1) { setY1(getY1()+y1); }
-    public void addY2(float y2) { setY2(getY2()+y2); }
+    public void addBackgroundX(int background, float x) { setBackgroundX(background, getBackgroundX(background) + x); }
+    public void addBackgroundY(int background, float y) { setBackgroundY(background, getBackgroundY(background) + y); }
 
-    public float getWidth1() { return rectangle1.getWidth(); }
-    public void setWidth1(int width1) { rectangle1.setWidth(width1); }
-    public float getHeight1() { return rectangle1.getHeight(); }
-    public void setHeight1(int height1) { rectangle1.setHeight(height1); }
+    public float getBackgroundWidth(int background) { return backgroundRectangles[background].getWidth(); }
+    public void setBackgroundWidth(int background, int width) { backgroundRectangles[background].setWidth(width); }
+    public float getBackgroundHeight(int background) { return backgroundRectangles[background].getHeight(); }
+    public void setBackgroundHeight(int background, int height) { backgroundRectangles[background].setHeight(height); }
 
-    public float getX2() { return rectangle2.getX(); }
-    public float getY2() { return rectangle2.getY(); }
-    public void setX2(float x2) { rectangle2.setX(x2); }
-    public void setY2(float y2) { rectangle2.setY(y2); }
-
-    public float getWidth2() { return rectangle2.getWidth(); }
-    public void setWidth2(int width2) { rectangle2.setWidth(width2); }
-    public float getHeight2() { return rectangle2.getHeight(); }
-    public void setHeight2(int height2) { rectangle2.setHeight(height2); }
+    public boolean getMoving() { return moving; }
+    public void setMoving(boolean moving) { this.moving = moving; }
 }

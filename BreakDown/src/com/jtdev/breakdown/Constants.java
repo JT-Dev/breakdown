@@ -23,13 +23,9 @@ public class Constants
     public static final int SPLASH_WIDTH = 1280;
     public static final int SPLASH_HEIGHT = 720;
 
-    public static final String BACKGROUND_IMAGE_PATH_1 = "data/background1.png";
-    public static final int BACKGROUND_WIDTH_1 = 1280;
-    public static final int BACKGROUND_HEIGHT_1 = 720;
-
-    public static final String BACKGROUND_IMAGE_PATH_2 = "data/background1.png";
-    public static final int BACKGROUND_WIDTH_2 = 1280;
-    public static final int BACKGROUND_HEIGHT_2 = 720;
+    public static final String BACKGROUND_IMAGE_PATH = "data/background.png";
+    public static final int BACKGROUND_WIDTH = 1280;
+    public static final int BACKGROUND_HEIGHT = 720;
 
     public static final String PLAYER_IMAGE_PATH = "data/player.png";
     public static final float PLAYER_STARTING_X = (float) (SCREEN_WIDTH * 0.1);
@@ -42,8 +38,7 @@ public class Constants
     public static final int WALL_HEIGHT = 8;
 
     //Background
-    public static final int BACKGROUND_SPEED_1 = 5;
-    public static final int BACKGROUND_SPEED_2 = 5;
+    public static final int BACKGROUND_SPEED = 5;
 
     //Key mapping
     public static final int SPACE = Input.Keys.SPACE;
