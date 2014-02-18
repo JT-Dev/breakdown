@@ -1,6 +1,5 @@
 package com.jtdev.breakdown.entities;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.jtdev.breakdown.Constants;
@@ -44,7 +43,7 @@ public class World
         logger.log("Done creating objects");
     }
 
-    public void update(float delta)
+    public void update()
     {
         if (Constants.TOUCHSCREEN) updateTouchScreen();
         else updateKeys();
@@ -86,5 +85,6 @@ public class World
 
     public FileManager getFileManager() { return fileManager; }
     public Profile getProfile() { return profile; }
+    public EntityManager getEntityManager() { return entityManager; }
 
 }

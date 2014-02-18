@@ -19,7 +19,7 @@ import com.jtdev.breakdown.Main;
 public class SplashScreen implements Screen
 {
     private final Main main;
-    private SpriteBatch spriteBatch;
+    private SpriteBatch batch;
     private long startTime;
     private TextureRegion image;
 
@@ -35,11 +35,11 @@ public class SplashScreen implements Screen
     public void render(float delta)
     {
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-        spriteBatch.begin();
-        spriteBatch.draw(image, 0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
-        spriteBatch.end();
+        batch.begin();
+        batch.draw(image, 0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
+        batch.end();
 
-        if (TimeUtils.millis() - startTime > Constants.SPLASH_SCREEN_TIME) main.setScreen(new GameScreen());
+        if (TimeUtils.millis() - startTime > Constants.SPLASH_SCREEN_TIME) main.setScreen(new MenuScreen(main));
     }
 
     @Override
@@ -50,7 +50,8 @@ public class SplashScreen implements Screen
     @Override
     public void show()
     {
-        spriteBatch = new SpriteBatch();
+        main.init();
+        batch = new SpriteBatch();
         startTime = TimeUtils.millis();
     }
 

@@ -20,11 +20,12 @@ import com.jtdev.breakdown.utils.Logger;
  */
 public class Player implements Entity
 {
-    private float vx, vy, speed;
+    private float speed;
 
     private Color color;
     private Logger logger;
     private Sprite sprite;
+    private boolean showing;
 
     public Player()
     {
@@ -42,7 +43,7 @@ public class Player implements Entity
         sprite.setPosition(x,y);
 
         color = new Color();
-        vx = vy = speed = 0;
+        speed = 0;
     }
 
     public void update()
@@ -51,15 +52,18 @@ public class Player implements Entity
 
     public void draw(SpriteBatch batch)
     {
-        sprite.draw(batch);
+        if (showing) sprite.draw(batch);
     }
 
     public void debugDraw(ShapeRenderer shapeRenderer)
     {
-        shapeRenderer.begin(ShapeType.Filled);
-        shapeRenderer.setColor(getColor());
-        shapeRenderer.rect(getX(), getY(), getWidth(), getHeight());
-        shapeRenderer.end();
+        if (showing)
+        {
+            shapeRenderer.begin(ShapeType.Filled);
+            shapeRenderer.setColor(getColor());
+            shapeRenderer.rect(getX(), getY(), getWidth(), getHeight());
+            shapeRenderer.end();
+        }
     }
 
     public boolean collides(Entity otherEntity)
@@ -81,13 +85,6 @@ public class Player implements Entity
     public void addX(float x) { setX(getX()+x); }
     public void addY(float y) { setY(getY()+y); }
 
-    public float getVx() { return vx; }
-    public float getVy() { return vy; }
-    public void setVx(float vx) { this.vx = vx; }
-    public void setVy(float vy) { this.vy = vy; }
-    public void addVx(float vx) { this.vx += vx; }
-    public void addVy(float vy) { this.vy += vy; }
-
     public float getSpeed() { return speed; }
     public void setSpeed(float speed)
     {
@@ -103,4 +100,7 @@ public class Player implements Entity
     public Sprite getSprite() { return sprite; }
 
     public Color getColor() { return color; }
+
+    public boolean isShowing() { return showing; }
+    public void setShowing(boolean showing) { this.showing = showing; }
 }

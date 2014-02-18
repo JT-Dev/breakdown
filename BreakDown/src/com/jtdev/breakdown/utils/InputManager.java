@@ -19,8 +19,8 @@ public class InputManager implements InputProcessor
     private boolean[] keysDown;
     private int[] touchX, touchY;
     private int[] oldTouchX,oldTouchY;//,touchX,touchY;
+    private boolean flipped = true;
 
-    private float distanceTouchX,distanceTouchY, distance, angle;
     //private int distanceZoom, oldZoom;
     //private boolean zooming;
 
@@ -71,7 +71,8 @@ public class InputManager implements InputProcessor
     public boolean touchDown(int screenX, int screenY, int pointer, int button)
     {
         touchX[pointer] = screenX;
-        touchY[pointer] = screenY;
+        if (flipped) touchY[pointer] = screenY;
+        else touchY[pointer] = Constants.SCREEN_HEIGHT - screenY;
         //touchX = screenX;
         //touchY = screenY;
 
@@ -89,10 +90,8 @@ public class InputManager implements InputProcessor
         touchX[pointer] = -1;
         touchY[pointer] = -1;
         oldTouchX[pointer] = screenX;
-        oldTouchY[pointer] = screenY;
-
-        distance = 0;
-        angle = 0;
+        if (flipped) oldTouchY[pointer] = screenY;
+        else oldTouchY[pointer] = Constants.SCREEN_HEIGHT - screenY;
 
         //distanceTouchX = 0;
         //distanceTouchY = 0;
@@ -109,41 +108,6 @@ public class InputManager implements InputProcessor
         logger.log("Pointer: " + pointer);
         logger.log("Touch X: " + screenX);
         logger.log("Touch Y: " + screenY);
-        if (pointer == 0)
-        {
-            if (oldTouchX[0] != screenX) distanceTouchX = screenX - oldTouchX[0];
-            if (oldTouchY[0] != screenY) distanceTouchY = screenY - oldTouchY[0];
-
-            distance = CustomMaths.distance(distanceTouchX, distanceTouchY) / 4;
-            angle = CustomMaths.angle(distanceTouchX, distanceTouchY);
-
-            logger.log("Distance Touch X: " + distanceTouchX);
-            logger.log("Distance Touch Y: " + distanceTouchY);
-        }
-        /*else if (pointer == 1)
-        {
-            if (!zooming)
-            {
-                int currentZoom = (int) Math.sqrt(Math.pow(oldTouchX[0] - screenX,2) + Math.pow(oldTouchY[0] - screenY,2));
-                //logger.log("Distance: " + currentZoom);
-                //if (currentZoom != oldZoom) distanceZoom = currentZoom - oldZoom;
-                distanceZoom = 0;
-                oldZoom = currentZoom;
-                zooming = true;
-            }
-            else
-            {
-                int currentZoom = (int) Math.sqrt(Math.pow(oldTouchX[0] - screenX,2) + Math.pow(oldTouchY[0] - screenY,2));
-                //logger.log("Distance: " + currentZoom);
-                //TODO Find a better number instead of 2
-                if (currentZoom != oldZoom) distanceZoom = (currentZoom - oldZoom) * 2;
-                oldZoom = currentZoom;
-            }
-        }*/
-
-        //oldTouchX[pointer] = screenX;
-        //oldTouchY[pointer] = screenY;
-
         return true;
     }
 
@@ -171,10 +135,6 @@ public class InputManager implements InputProcessor
     }
 
     public float getTouchX(int pointer) { return touchX[pointer]; }
-    public float getDistanceTouchX() { return distanceTouchX; }
     public float getTouchY(int pointer) { return touchY[pointer]; }
-    public float getDistanceTouchY() { return distanceTouchY; }
-    public float getDistance() { return distance; }
-    public float getAngle() { return angle; }
-    //public int getDistanceZoom() { return distanceZoom; }
+    public void setFlipped(boolean flipped) { this.flipped = flipped; }
 }

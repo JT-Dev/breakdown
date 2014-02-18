@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.jtdev.breakdown.Constants;
-import com.jtdev.breakdown.entities.BackgroundManager;
 import com.jtdev.breakdown.entities.Player;
 import com.jtdev.breakdown.entities.Wall;
 
@@ -24,7 +23,6 @@ public class EntityManager
     private BackgroundManager backgroundManager;
     private ArrayList<Wall> wallArray;
     private ArrayList<Wall> removeWallArray;
-    private long spawnTimeout;
 
     public EntityManager()
     {
@@ -33,7 +31,6 @@ public class EntityManager
         wallArray = new ArrayList<Wall>();
         removeWallArray = new ArrayList<Wall>();
 
-        spawnTimeout = 0;
         //if (Constants.DEBUG_DRAW) createWall(0,0);
     }
 
@@ -91,7 +88,6 @@ public class EntityManager
 
         Wall wall = new Wall();
         wallArray.add(wall);
-        spawnTimeout = TimeUtils.millis();
     }
 
     public Player getPlayer() { return player; }

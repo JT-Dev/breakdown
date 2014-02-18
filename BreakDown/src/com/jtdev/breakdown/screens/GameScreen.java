@@ -1,6 +1,7 @@
 package com.jtdev.breakdown.screens;
 
 import com.badlogic.gdx.Screen;
+import com.jtdev.breakdown.Main;
 import com.jtdev.breakdown.entities.World;
 import com.jtdev.breakdown.utils.InputManager;
 import com.jtdev.breakdown.utils.Logger;
@@ -20,50 +21,60 @@ public class GameScreen implements Screen
     WorldRenderer renderer;
     InputManager inputManager;
 
-    @Override public void render(float delta)
+    public GameScreen(Main main)
+    {
+        logger = new Logger(this);
+
+        this.world = main.getWorld();
+        this.renderer = main.getRenderer();
+        this.inputManager = main.getInputManager();
+    }
+
+    @Override
+	public void render(float delta)
     {
         //Gdx.gl.glClearColor(1, 1, 1, 1);
         //Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
-        world.update(delta);
+        world.update();
         renderer.render();
     }
 
-    @Override public void resize(int width, int height)
+    @Override
+	public void resize(int width, int height)
     {
     }
 
-    @Override public void show()
+    @Override
+	public void show()
     {
-        logger = new Logger(this);
-
-        inputManager = new InputManager();
-        world = new World(inputManager);
-        renderer = new WorldRenderer(world);
-
-        inputManager.setInputProcessor(true);
+        world.getEntityManager().getPlayer().setShowing(true);
     }
 
-    @Override public void hide()
+    @Override
+	public void hide()
     {
         inputManager.setInputProcessor(false);
     }
 
-    @Override public void pause()
+    @Override
+	public void pause()
     {
         logger.log("Pausing");
         world.pause();
         renderer.pause();
     }
 
-    @Override public void resume()
+    @Override
+	public void resume()
     {
         logger.log("Resuming");
         world.resume();
         renderer.resume();
     }
 
-    @Override public void dispose()
+    @Override
+	public void dispose()
     {
         logger.log("Disposing");
         inputManager.setInputProcessor(false);

@@ -42,13 +42,31 @@ public class Constants
     public static final String PLAYER_IMAGE_PATH = "data/player.png";
     public static final float PLAYER_STARTING_X = (float) (SCREEN_WIDTH * 0.1);
     public static final float PLAYER_STARTING_Y = 0;
-    public static final int PLAYER_WIDTH = (int) (SCREEN_WIDTH * 0.18);
-    public static final int PLAYER_HEIGHT = (int) (SCREEN_HEIGHT * 0.7);
+    public static final int PLAYER_WIDTH = 200;
+    public static final int PLAYER_HEIGHT = 200;
 
     //Wall
     public static final String WALL_IMAGE_PATH = "data/wall.png";
     public static final int WALL_WIDTH = 16;
     public static final int WALL_HEIGHT = 8;
+
+    //Button images
+    //Play
+    public static final String PLAY_BUTTON_IMAGE_PATH = "data/play.png";
+    public static final int PLAY_BUTTON_WIDTH = 100;
+    public static final int PLAY_BUTTON_HEIGHT = 100;
+
+    //Play
+    public static final String CREDIT_BUTTON_IMAGE_PATH = "data/credit.png";
+    public static final int CREDIT_BUTTON_WIDTH = 100;
+    public static final int CREDIT_BUTTON_HEIGHT = 100;
+
+    //Play
+    public static final String MUSIC_BUTTON_IMAGE_PATH = "data/music.png";
+    public static final int MUSIC_BUTTON_WIDTH = 100;
+    public static final int MUSIC_BUTTON_HEIGHT = 100;
+
+
 
     //Key mapping
     public static final int SPACE = Input.Keys.SPACE;

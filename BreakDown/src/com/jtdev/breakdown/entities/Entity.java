@@ -21,13 +21,6 @@ public interface Entity
     public void setY(float y);
     public void addX(float x);
     public void addY(float y);
-    public float getVx();
-
-    public float getVy();
-    public void setVx(float vx);
-    public void setVy(float vy);
-    public void addVx(float vx);
-    public void addVy(float vy);
 
     public float getSpeed();
     public void setSpeed(float speed);
