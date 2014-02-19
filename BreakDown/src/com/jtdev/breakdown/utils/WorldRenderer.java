@@ -49,8 +49,8 @@ public class WorldRenderer
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
-        //batch.getProjectionMatrix().setToOrtho2D(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
-        //batch.setProjectionMatrix(world.getCamera().combined);
+        //batch.getProjectionMatrix().setToOrtho2D(0, 0, 680, 480);
+        //batch.setProjectionMatrix(camera.combined);
         batch.begin();
         world.draw(batch);
         batch.end();
@@ -61,7 +61,7 @@ public class WorldRenderer
             world.debugDraw(shapeRenderer);
 
             batch.begin();
-            debugFont.draw(batch, String.valueOf(Gdx.graphics.getFramesPerSecond()),10,Constants.SCREEN_HEIGHT - 10);
+            debugFont.draw(batch, String.valueOf(Gdx.graphics.getFramesPerSecond()),10,Constants.DEVICE_SCREEN_HEIGHT - 10);
             batch.end();
         }
     }

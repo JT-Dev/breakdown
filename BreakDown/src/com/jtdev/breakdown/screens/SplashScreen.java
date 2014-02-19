@@ -36,7 +36,7 @@ public class SplashScreen implements Screen
     {
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
         batch.begin();
-        batch.draw(image, 0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
+        batch.draw(image, 0, 0, Constants.DEVICE_SCREEN_WIDTH, Constants.DEVICE_SCREEN_HEIGHT);
         batch.end();
 
         if (TimeUtils.millis() - startTime > Constants.SPLASH_SCREEN_TIME) main.setScreen(new MenuScreen(main));

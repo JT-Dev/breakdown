@@ -27,7 +27,7 @@ public class Wall implements Entity
 
     public Wall()
     {
-        this(Constants.SCREEN_WIDTH / 2 - Constants.PLAYER_WIDTH / 2, Constants.SCREEN_HEIGHT / 2 - Constants.PLAYER_HEIGHT / 2);
+        this(Constants.DEVICE_SCREEN_WIDTH / 2 - Constants.PLAYER_IMAGE_WIDTH / 2, Constants.DEVICE_SCREEN_HEIGHT / 2 - Constants.PLAYER_IMAGE_HEIGHT / 2);
     }
 
     public Wall(float x, float y)
@@ -35,9 +35,10 @@ public class Wall implements Entity
         logger = new Logger(this);
 
         Texture texture = new Texture(Gdx.files.internal(Constants.WALL_IMAGE_PATH));
-        TextureRegion image = new TextureRegion(texture, Constants.WALL_WIDTH, Constants.WALL_HEIGHT);
+        TextureRegion image = new TextureRegion(texture, Constants.WALL_IMAGE_WIDTH, Constants.WALL_IMAGE_HEIGHT);
         
         sprite = new Sprite(image);
+        sprite.setSize(Constants.WALL_WIDTH, Constants.WALL_HEIGHT);
         sprite.setPosition(x,y);
         vx = vy = speed = 0;
     }

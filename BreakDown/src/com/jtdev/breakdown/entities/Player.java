@@ -37,9 +37,11 @@ public class Player implements Entity
         logger = new Logger(this);
 
         Texture texture = new Texture(Gdx.files.internal(Constants.PLAYER_IMAGE_PATH));
-        TextureRegion image = new TextureRegion(texture, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT);
+        TextureRegion image = new TextureRegion(texture, Constants.PLAYER_IMAGE_WIDTH, Constants.PLAYER_IMAGE_HEIGHT);
 
         sprite = new Sprite(image);
+        sprite.setSize(Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT);
+        //sprite.setScale(Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT);
         sprite.setPosition(x,y);
 
         color = new Color();

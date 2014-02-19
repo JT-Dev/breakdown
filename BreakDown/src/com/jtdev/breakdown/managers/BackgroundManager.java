@@ -36,7 +36,7 @@ public class BackgroundManager
     {
         log = new Logger(this);
 
-        int backgroundNum = (int) Math.ceil((float) Constants.SCREEN_WIDTH / (float) Constants.BACKGROUND_WIDTH) * 2;
+        int backgroundNum = (int) Math.ceil((float) Constants.DEVICE_SCREEN_WIDTH / (float) Constants.BACKGROUND_WIDTH) * 2;
         log.log("Number of backgroundTextures: " + backgroundNum);
         backgroundTextures = new TextureRegion[backgroundNum];
         backgrounds = new Background[backgroundNum];
@@ -47,9 +47,9 @@ public class BackgroundManager
             texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
             TextureRegion image = new TextureRegion(texture,Constants.BACKGROUND_WIDTH,Constants.BACKGROUND_HEIGHT);
             if (i % 2 == 0) image.flip(true,false);
-            Rectangle rectangle = new Rectangle(i * Constants.BACKGROUND_WIDTH, 0, Constants.BACKGROUND_WIDTH, Constants.BACKGROUND_HEIGHT);
+            //Rectangle rectangle = new Rectangle(i * Constants.BACKGROUND_WIDTH, 0, Constants.BACKGROUND_WIDTH, Constants.BACKGROUND_HEIGHT);
             
-            backgrounds[i] = new Background(rectangle,image);
+            backgrounds[i] = new Background(i * Constants.BACKGROUND_WIDTH, 0 ,image);
 
             if (Constants.DEBUG_DRAW) colors[i] = new Color(MathUtils.random(),MathUtils.random(),MathUtils.random(),0);
         }
@@ -60,8 +60,8 @@ public class BackgroundManager
         {
             Texture texture = new Texture(Gdx.files.internal(Constants.CLOUD_IMAGE_PATH+(i+1)+".png"));
             texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-            cloudTextures[i] = new TextureRegion(texture,Constants.CLOUD_WIDTH,Constants.CLOUD_HEIGHT);
-            //cloud = new Rectangle(i * Constants.CLOUD_WIDTH, 0, Constants.CLOUD_WIDTH, Constants.CLOUD_HEIGHT);
+            cloudTextures[i] = new TextureRegion(texture,Constants.CLOUD_IMAGE_WIDTH,Constants.CLOUD_IMAGE_HEIGHT);
+            //cloud = new Rectangle(i * Constants.CLOUD_IMAGE_WIDTH, 0, Constants.CLOUD_IMAGE_WIDTH, Constants.CLOUD_IMAGE_HEIGHT);
         }
 
         removeClouds = new ArrayList<Cloud>();
@@ -83,10 +83,10 @@ public class BackgroundManager
             log.log("Clouds array length: " + clouds.size());
             int i = MathUtils.random(0,cloudTextures.length-1);
             TextureRegion image = cloudTextures[i];
-            Rectangle rectangle = new Rectangle(Constants.SCREEN_WIDTH,Constants.SCREEN_HEIGHT - (Constants.CLOUD_HEIGHT / 4),
+            Rectangle rectangle = new Rectangle(Constants.DEVICE_SCREEN_WIDTH,Constants.DEVICE_SCREEN_HEIGHT - (Constants.CLOUD_IMAGE_HEIGHT / 4),
                                                 cloudTextures[i].getRegionWidth(),cloudTextures[i].getRegionHeight());
-            clouds.add(new Cloud(rectangle,image));
-            //for (int i = 0; i <= backgroundTextures.length-1; i++) batch.draw(backgroundTextures[i],background.getWidth(),Constants.SCREEN_HEIGHT);
+            clouds.add(new Cloud(Constants.DEVICE_SCREEN_WIDTH,Constants.DEVICE_SCREEN_HEIGHT - (Constants.CLOUD_IMAGE_HEIGHT / 4),image));
+            //for (int i = 0; i <= backgroundTextures.length-1; i++) batch.draw(backgroundTextures[i],background.getWidth(),Constants.DEVICE_SCREEN_HEIGHT);
         }
         for (Cloud cloud : clouds)
         {
@@ -103,17 +103,19 @@ public class BackgroundManager
     {
         for (Background background : backgrounds)
         {
-            if (background.getX() + background.getWidth() > 0 && background.getX() < Constants.SCREEN_WIDTH)
+            if (background.getX() + background.getWidth() > 0 && background.getX() < Constants.DEVICE_SCREEN_WIDTH)
             {
-                batch.draw(background.getTexture(), background.getX(), background.getY(), background.getWidth(), Constants.SCREEN_HEIGHT);
+                background.draw(batch);
+                //batch.draw(background.getTexture(), background.getX(), background.getY(), background.getWidth(), Constants.DEVICE_SCREEN_HEIGHT);
             }
         }
         for (Cloud cloud : clouds)
         {
-            if (cloud.getX() + cloud.getWidth() > 0 && cloud.getX() < Constants.SCREEN_WIDTH)
+            if (cloud.getX() + cloud.getWidth() > 0 && cloud.getX() < Constants.DEVICE_SCREEN_WIDTH)
             {
-                batch.draw(cloud.getTexture(), cloud.getX(), cloud.getY(),
-                           cloud.getTexture().getRegionWidth() / 4, cloud.getTexture().getRegionHeight() / 4);
+                cloud.draw(batch);
+                //batch.draw(cloud.getTexture(), cloud.getX(), cloud.getY(),
+                //           Constants.DEVICE_SCREEN_WIDTH / 4, Constants.DEVICE_SCREEN_HEIGHT / 4);
             }
         }
     }

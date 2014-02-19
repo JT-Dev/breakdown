@@ -1,7 +1,9 @@
 package com.jtdev.breakdown.entities;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Rectangle;
+import com.jtdev.breakdown.Constants;
 
 /**
  * Created with IntelliJ IDEA.
@@ -11,30 +13,38 @@ import com.badlogic.gdx.math.Rectangle;
  */
 public class Cloud
 {
-    private Rectangle rectangle;
-    private TextureRegion texture;
-
-    public Cloud(Rectangle rectangle, TextureRegion texture)
+    private Sprite sprite;
+    
+    public Cloud(float x, float y, TextureRegion image)
     {
-        this.rectangle = rectangle;
-        this.texture = texture;
+        sprite = new Sprite(image);
+        sprite.setSize(Constants.CLOUD_WIDTH, Constants.CLOUD_HEIGHT);
+        sprite.setPosition(x,y);
     }
 
-    public Rectangle getRectangle() { return rectangle; }
-    public void setRectangle(Rectangle rectangle) { this.rectangle = rectangle; }
-    public TextureRegion getTexture() { return texture; }
-    public void setTexture(TextureRegion texture) { this.texture = texture; }
+    public void update()
+    {
+        addX(-Constants.CLOUD_SPEED);
+    }
+    
+    public void draw(SpriteBatch batch)
+    {
+        sprite.draw(batch);
+    }
 
-    public float getX() { return rectangle.getX(); }
-    public float getY() { return rectangle.getY(); }
-    public void setX(float x) { rectangle.setX(x); }
-    public void setY(float y) { rectangle.setY(y); }
+    public Sprite getSprite() { return sprite; }
+    public void setSprite(Sprite sprite) { this.sprite = sprite; }
+    
+    public float getX() { return sprite.getX(); }
+    public float getY() { return sprite.getY(); }
+    public void setX(float x) { sprite.setX(x); }
+    public void setY(float y) { sprite.setY(y); }
 
     public void addX(float x) { setX(getX() + x); }
     public void addY(float y) { setY(getY() + y); }
 
-    public float getWidth() { return rectangle.getWidth(); }
-    public void setWidth(int width) { rectangle.setWidth(width); }
-    public float getHeight() { return rectangle.getHeight(); }
-    public void setHeight(int height) { rectangle.setHeight(height); }
+    public float getWidth() { return sprite.getWidth(); }
+    public void setWidth(int width) { sprite.setRegionWidth(width); }
+    public float getHeight() { return sprite.getHeight(); }
+    public void setHeight(int height) { sprite.setRegionHeight(height); }
 }

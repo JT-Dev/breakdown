@@ -25,7 +25,7 @@ public class MenuScreen implements Screen
     private Button creditButton;
     private Button musicButton;
 
-    private SpriteBatch batch;
+    private SpriteBatch menuBatch;
     private BackgroundManager backgroundManager;
     private Logger log;
 
@@ -36,7 +36,7 @@ public class MenuScreen implements Screen
         log = new Logger(this);
         this.main = main;
 
-        batch = new SpriteBatch();
+        menuBatch = new SpriteBatch();
         backgroundManager = main.getWorld().getEntityManager().getBackgroundManager();
 
         Texture playTexture = new Texture(Gdx.files.internal(Constants.PLAY_BUTTON_IMAGE_PATH));
@@ -47,9 +47,9 @@ public class MenuScreen implements Screen
         TextureRegion creditImage = new TextureRegion(creditTexture,Constants.CREDIT_BUTTON_WIDTH,Constants.CREDIT_BUTTON_HEIGHT);
         TextureRegion musicImage = new TextureRegion(musicTexture,Constants.MUSIC_BUTTON_WIDTH,Constants.MUSIC_BUTTON_HEIGHT);
 
-        playButton = new Button(Constants.SCREEN_WIDTH / 2 - playImage.getRegionWidth() / 2, Constants.SCREEN_HEIGHT / 2 - playImage.getRegionHeight() / 2, playImage);
-        creditButton = new Button(Constants.SCREEN_WIDTH / 2 - playImage.getRegionWidth() / 2 - creditImage.getRegionWidth() - 10, Constants.SCREEN_HEIGHT / 2 - playImage.getRegionHeight() / 2, creditImage);
-        musicButton = new Button(Constants.SCREEN_WIDTH / 2 - playImage.getRegionWidth() / 2 + musicImage.getRegionWidth() + 10, Constants.SCREEN_HEIGHT / 2 - playImage.getRegionHeight() / 2, musicImage);
+        playButton = new Button(Constants.DEVICE_SCREEN_WIDTH / 2 - playImage.getRegionWidth() / 2, Constants.DEVICE_SCREEN_HEIGHT / 2 - playImage.getRegionHeight() / 2, playImage);
+        creditButton = new Button(Constants.DEVICE_SCREEN_WIDTH / 2 - playImage.getRegionWidth() / 2 - creditImage.getRegionWidth() - 10, Constants.DEVICE_SCREEN_HEIGHT / 2 - playImage.getRegionHeight() / 2, creditImage);
+        musicButton = new Button(Constants.DEVICE_SCREEN_WIDTH / 2 - playImage.getRegionWidth() / 2 + musicImage.getRegionWidth() + 10, Constants.DEVICE_SCREEN_HEIGHT / 2 - playImage.getRegionHeight() / 2, musicImage);
 
         inputManager = new InputManager();
         inputManager.setInputProcessor(true);
@@ -75,12 +75,13 @@ public class MenuScreen implements Screen
             //main.setScreen(new MusicScreen());
         }
 
-        batch.begin();
-        backgroundManager.draw(batch);
-        playButton.draw(batch);
-        creditButton.draw(batch);
-        musicButton.draw(batch);
-        batch.end();
+        main.getRenderer().render();
+
+        menuBatch.begin();
+        playButton.draw(menuBatch);
+        creditButton.draw(menuBatch);
+        musicButton.draw(menuBatch);
+        menuBatch.end();
     }
 
     @Override

@@ -72,7 +72,7 @@ public class InputManager implements InputProcessor
     {
         touchX[pointer] = screenX;
         if (flipped) touchY[pointer] = screenY;
-        else touchY[pointer] = Constants.SCREEN_HEIGHT - screenY;
+        else touchY[pointer] = Constants.DEVICE_SCREEN_HEIGHT - screenY;
         //touchX = screenX;
         //touchY = screenY;
 
@@ -91,7 +91,7 @@ public class InputManager implements InputProcessor
         touchY[pointer] = -1;
         oldTouchX[pointer] = screenX;
         if (flipped) oldTouchY[pointer] = screenY;
-        else oldTouchY[pointer] = Constants.SCREEN_HEIGHT - screenY;
+        else oldTouchY[pointer] = Constants.DEVICE_SCREEN_HEIGHT - screenY;
 
         //distanceTouchX = 0;
         //distanceTouchY = 0;

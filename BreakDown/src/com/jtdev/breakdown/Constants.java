@@ -13,8 +13,8 @@ import com.badlogic.gdx.Input;
 public class Constants
 {
     //General options
-    public static int SCREEN_WIDTH = Gdx.graphics.getWidth();
-    public static int SCREEN_HEIGHT = Gdx.graphics.getHeight();
+    public static int DEVICE_SCREEN_WIDTH = Gdx.graphics.getWidth();
+    public static int DEVICE_SCREEN_HEIGHT = Gdx.graphics.getHeight();
     public static final boolean TOUCHSCREEN = Gdx.app.getType() == Application.ApplicationType.Android || Gdx.app.getType() == Application.ApplicationType.iOS;
     public static final String ICON_PATH = "data/icon.png";
 
@@ -35,20 +35,26 @@ public class Constants
     public static final int MAX_CLOUDS = 3;
     public static final int AMOUNT_OF_CLOUDS = 10;
     public static final String CLOUD_IMAGE_PATH = "data/cloud";
-    public static final int CLOUD_WIDTH = 800;
-    public static final int CLOUD_HEIGHT = 500;
+    public static final int CLOUD_IMAGE_WIDTH = 800;
+    public static final int CLOUD_IMAGE_HEIGHT = 500;
+    public static final int CLOUD_WIDTH = DEVICE_SCREEN_WIDTH / 4;
+    public static final int CLOUD_HEIGHT = DEVICE_SCREEN_HEIGHT / 4;
 
     //Player
     public static final String PLAYER_IMAGE_PATH = "data/player.png";
-    public static final float PLAYER_STARTING_X = (float) (SCREEN_WIDTH * 0.1);
+    public static final float PLAYER_STARTING_X = DEVICE_SCREEN_WIDTH * 0.05f;
     public static final float PLAYER_STARTING_Y = 0;
-    public static final int PLAYER_WIDTH = 200;
-    public static final int PLAYER_HEIGHT = 200;
+    public static final int PLAYER_IMAGE_WIDTH = 200;
+    public static final int PLAYER_IMAGE_HEIGHT = 200;
+    public static final int PLAYER_WIDTH = (int) (DEVICE_SCREEN_WIDTH * 0.2);
+    public static final int PLAYER_HEIGHT = (int) (DEVICE_SCREEN_HEIGHT * 0.8);
 
     //Wall
     public static final String WALL_IMAGE_PATH = "data/wall.png";
-    public static final int WALL_WIDTH = 16;
-    public static final int WALL_HEIGHT = 8;
+    public static final int WALL_IMAGE_WIDTH = 16;
+    public static final int WALL_IMAGE_HEIGHT = 8;
+    public static final int WALL_WIDTH = (int) (DEVICE_SCREEN_WIDTH * 0.1);
+    public static final int WALL_HEIGHT = DEVICE_SCREEN_HEIGHT;
 
     //Button images
     //Play
