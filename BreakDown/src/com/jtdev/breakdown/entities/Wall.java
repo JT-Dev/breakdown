@@ -19,31 +19,24 @@ import com.jtdev.breakdown.utils.Logger;
  */
 public class Wall implements Entity
 {
-    private float vx, vy, speed;
+    private float speed;
 
     private Color color;
     private Logger logger;
     private Sprite sprite;
 
-    public Wall()
-    {
-        this(Constants.SCREEN_WIDTH / 2 - Constants.PLAYER_WIDTH / 2, Constants.SCREEN_HEIGHT / 2 - Constants.PLAYER_HEIGHT / 2);
-    }
-
-    public Wall(float x, float y)
+    public Wall(float x, float y, TextureRegion image)
     {
         logger = new Logger(this);
-
-        Texture texture = new Texture(Gdx.files.internal(Constants.WALL_IMAGE_PATH));
-        TextureRegion image = new TextureRegion(texture, Constants.WALL_WIDTH, Constants.WALL_HEIGHT);
         
         sprite = new Sprite(image);
         sprite.setPosition(x,y);
-        vx = vy = speed = 0;
+        speed = 0;
     }
 
     public void update()
     {
+        addX(speed);
     }
 
     public void draw(SpriteBatch batch)
@@ -69,6 +62,28 @@ public class Wall implements Entity
         logger.log("Wall Collision");
     }
 
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Wall wall = (Wall) o;
+
+        if (Float.compare(wall.speed, speed) != 0) return false;
+        if (sprite != null ? !sprite.equals(wall.sprite) : wall.sprite != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        int result = (speed != +0.0f ? Float.floatToIntBits(speed) : 0);
+        result = 31 * result + (sprite != null ? sprite.hashCode() : 0);
+        return result;
+    }
+
     public Rectangle getRectangle() { return sprite.getBoundingRectangle(); }
 
     public float getX() { return sprite.getX(); }
@@ -78,21 +93,8 @@ public class Wall implements Entity
     public void addX(float x) { setX(getX()+x); }
     public void addY(float y) { setY(getY()+y); }
 
-    public float getVx() { return vx; }
-    public float getVy() { return vy; }
-    public void setVx(float vx) { this.vx = vx; }
-    public void setVy(float vy) { this.vy = vy; }
-    public void addVx(float vx) { this.vx += vx; }
-    public void addVy(float vy) { this.vy += vy; }
-
     public float getSpeed() { return speed; }
-    public void setSpeed(float speed)
-    {
-        this.speed = speed;
-        if (this.speed > Constants.PLAYER_MAX_SPEED) this.speed = Constants.PLAYER_MAX_SPEED;
-        if (this.speed < -Constants.PLAYER_MAX_SPEED) this.speed = -Constants.PLAYER_MAX_SPEED;
-        if (this.speed < 0.05 && this.speed > 0.05) this.speed = 0;
-    }
+    public void setSpeed(float speed) { this.speed = speed; }
     public void addSpeed(float speed) { setSpeed(getSpeed() + speed); }
 
     public float getWidth() { return sprite.getWidth(); }
@@ -101,5 +103,5 @@ public class Wall implements Entity
 
     public Color getColor() { return color; }
 
-    public boolean isOutOfScreen() { return getX()+getWidth() < 0; }
+    public boolean isOutOfScreen() { return getX()+getWidth() <= 0; }
 }

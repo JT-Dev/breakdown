@@ -31,9 +31,6 @@ public class Constants
     public static final int BACKGROUND_HEIGHT = 720;
 
     //Clouds
-    public static final double CLOUD_SPAWN_RATE = 0.05;
-    public static final int MAX_CLOUDS = 3;
-    public static final int AMOUNT_OF_CLOUDS = 10;
     public static final String CLOUD_IMAGE_PATH = "data/cloud";
     public static final int CLOUD_WIDTH = 800;
     public static final int CLOUD_HEIGHT = 500;
@@ -47,28 +44,30 @@ public class Constants
 
     //Wall
     public static final String WALL_IMAGE_PATH = "data/wall.png";
-    public static final int WALL_WIDTH = 16;
-    public static final int WALL_HEIGHT = 8;
+    public static final int WALL_WIDTH = 100;
+    public static final int WALL_HEIGHT = 400;
 
     //Key mapping
     public static final int SPACE = Input.Keys.SPACE;
 
-    //BackgroundManager options
+    //Background options
     public static final int BACKGROUND_SPEED = 5;
 
     //Clouds options
-    public static int CLOUD_SPEED = 5;
+    public static final int CLOUD_SPAWN_RANGE = 10000;
+    public static final double CLOUD_SPAWN_RATE = 0.05;
+    public static final int MAX_CLOUDS = 3;
+    public static final int AMOUNT_OF_CLOUDS = 10;
+    public static final int CLOUD_SPEED = 5;
 
     //Player options
-    public static final int PLAYER_SPEED = 2;
-    public static final int PLAYER_MAX_SPEED = 5;
+    //Nothing here
 
     //Wall options
-
     public static final float WALL_SPEED = 5;
-    public static final int WALL_MAX_SPEED = 5;
-    public static final int WALL_SPAWN_RANGE = 500;
-    public static final int WALL_SPAWN_TIMEOUT = 500;
+    public static final int WALL_SPAWN_RANGE = 2000;
+    public static final double WALL_SPAWN_RATE = 0.5;
+    public static final int WALL_INITIAL_TIMEOUT = 1000;
 
     //File options
     public static final String FILE_PATH = "/home/james/data";

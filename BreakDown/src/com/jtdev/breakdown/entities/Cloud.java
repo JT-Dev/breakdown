@@ -12,18 +12,45 @@ import com.badlogic.gdx.math.Rectangle;
 public class Cloud
 {
     private Rectangle rectangle;
-    private TextureRegion texture;
+    private TextureRegion image;
 
-    public Cloud(Rectangle rectangle, TextureRegion texture)
+    public Cloud(float x, float y, TextureRegion image)
     {
-        this.rectangle = rectangle;
-        this.texture = texture;
+        this.rectangle = new Rectangle(x,y, image.getRegionWidth(), image.getRegionHeight());
+        this.image = image;
+    }
+
+    public boolean collides(Cloud otherCloud)
+    {
+        return getRectangle().overlaps(otherCloud.getRectangle());
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Cloud cloud = (Cloud) o;
+
+        if (rectangle != null ? !rectangle.equals(cloud.rectangle) : cloud.rectangle != null) return false;
+        if (image != null ? !image.equals(cloud.image) : cloud.image != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        int result = rectangle != null ? rectangle.hashCode() : 0;
+        result = 31 * result + (image != null ? image.hashCode() : 0);
+        return result;
     }
 
     public Rectangle getRectangle() { return rectangle; }
     public void setRectangle(Rectangle rectangle) { this.rectangle = rectangle; }
-    public TextureRegion getTexture() { return texture; }
-    public void setTexture(TextureRegion texture) { this.texture = texture; }
+    public TextureRegion getImage() { return image; }
+    public void setImage(TextureRegion image) { this.image = image; }
 
     public float getX() { return rectangle.getX(); }
     public float getY() { return rectangle.getY(); }

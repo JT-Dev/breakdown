@@ -13,8 +13,7 @@ public class MainDesktop
         cfg.addIcon(Constants.ICON_PATH, Files.FileType.Internal);
 		cfg.useGL20 = false;
 		cfg.width = 1300;
-		cfg.height = 380;
-		
+		cfg.height = 500;
 		new LwjglApplication(new Main(), cfg);
 	}
 }
