@@ -44,7 +44,6 @@ public class WallManager
 
     public void update()
     {
-        log.log("UDATES");
         for (Wall wall : wallArray)
         {
             wall.update();
@@ -65,7 +64,7 @@ public class WallManager
         Wall wall;
         do
         {
-            x = MathUtils.random(Constants.SCREEN_WIDTH, Constants.SCREEN_WIDTH + Constants.WALL_SPAWN_RANGE);
+            x = MathUtils.random(Constants.DEVICE_SCREEN_WIDTH, Constants.DEVICE_SCREEN_WIDTH + Constants.WALL_SPAWN_RANGE);
             y = 0;
             wall = new Wall(x,y,image);
             //TODO Vary speed based on distance travelled
@@ -91,12 +90,7 @@ public class WallManager
 
     public void draw(SpriteBatch batch)
     {
-        for (Wall wall: wallArray)
-        {
-            wall.draw(batch);
-            log.log("X: " + wall.getX());
-            log.log("Y: " + wall.getY());
-        }
+        for (Wall wall: wallArray) wall.draw(batch);
     }
 
     public void debugDraw(ShapeRenderer shapeRenderer)

@@ -25,18 +25,10 @@ public class Wall implements Entity
     private Logger logger;
     private Sprite sprite;
 
-    public Wall()
-    {
-        this(Constants.DEVICE_SCREEN_WIDTH / 2 - Constants.PLAYER_IMAGE_WIDTH / 2, Constants.DEVICE_SCREEN_HEIGHT / 2 - Constants.PLAYER_IMAGE_HEIGHT / 2);
-    }
-
-    public Wall(float x, float y)
+    public Wall(float x, float y, TextureRegion image)
     {
         logger = new Logger(this);
 
-        Texture texture = new Texture(Gdx.files.internal(Constants.WALL_IMAGE_PATH));
-        TextureRegion image = new TextureRegion(texture, Constants.WALL_IMAGE_WIDTH, Constants.WALL_IMAGE_HEIGHT);
-        
         sprite = new Sprite(image);
         sprite.setSize(Constants.WALL_WIDTH, Constants.WALL_HEIGHT);
         sprite.setPosition(x,y);
@@ -45,6 +37,7 @@ public class Wall implements Entity
 
     public void update()
     {
+        addX(speed);
     }
 
     public void draw(SpriteBatch batch)
@@ -79,21 +72,8 @@ public class Wall implements Entity
     public void addX(float x) { setX(getX()+x); }
     public void addY(float y) { setY(getY()+y); }
 
-    public float getVx() { return vx; }
-    public float getVy() { return vy; }
-    public void setVx(float vx) { this.vx = vx; }
-    public void setVy(float vy) { this.vy = vy; }
-    public void addVx(float vx) { this.vx += vx; }
-    public void addVy(float vy) { this.vy += vy; }
-
     public float getSpeed() { return speed; }
-    public void setSpeed(float speed)
-    {
-        this.speed = speed;
-        if (this.speed > Constants.PLAYER_MAX_SPEED) this.speed = Constants.PLAYER_MAX_SPEED;
-        if (this.speed < -Constants.PLAYER_MAX_SPEED) this.speed = -Constants.PLAYER_MAX_SPEED;
-        if (this.speed < 0.05 && this.speed > 0.05) this.speed = 0;
-    }
+    public void setSpeed(float speed) { this.speed = speed; }
     public void addSpeed(float speed) { setSpeed(getSpeed() + speed); }
 
     public float getWidth() { return sprite.getWidth(); }

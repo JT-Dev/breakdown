@@ -28,11 +28,16 @@ public class Button
 
     public boolean isPressed(InputManager inputManager)
     {
-        if (inputManager.getTouchX(0) != -1 && inputManager.getTouchY(0) != -1)
+        float touchX = inputManager.getTouchX(0);
+        float touchY = inputManager.getTouchY(0);
+        if (touchX != -1 && touchY != -1)
         {
-            if ((inputManager.getTouchX(0) > rectangle.getX() && inputManager.getTouchX(0) < rectangle.getX() + rectangle.getWidth()) &&
-                (inputManager.getTouchY(0) > rectangle.getY() && inputManager.getTouchY(0) < rectangle.getY() + rectangle.getHeight()))
+            if ((touchX > rectangle.getX() && touchX < rectangle.getX() + rectangle.getWidth()) &&
+                (touchY > rectangle.getY() && touchY < rectangle.getY() + rectangle.getHeight()))
+            {
+                inputManager.resetTouch(0);
                 return true;
+            }
         }
         return false;
     }

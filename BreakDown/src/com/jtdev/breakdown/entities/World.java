@@ -1,5 +1,7 @@
 package com.jtdev.breakdown.entities;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.jtdev.breakdown.Constants;
@@ -17,6 +19,7 @@ import com.jtdev.breakdown.utils.Profile;
  */
 public class World
 {
+    private final Music musicLoop;
     private Profile profile;
     private EntityManager entityManager;
     private FileManager fileManager;
@@ -28,19 +31,10 @@ public class World
         logger = new Logger(this);
         this.inputManager = inputManager;
 
-        create();
-    }
-
-    public void create()
-    {
-        logger.log("Creating Objects");
-
-        //fileManager = new FileManager(this);
-        //profile = fileManager.getProfile();
+        musicLoop = Gdx.audio.newMusic(Gdx.files.internal(Constants.MUSIC_LOOP_PATH));
+        musicLoop.setLooping(true);
 
         entityManager = new EntityManager();
-
-        logger.log("Done creating objects");
     }
 
     public void update()
@@ -83,8 +77,13 @@ public class World
         logger.log("Disposing World");
     }
 
+    public void toggleMusic()
+    {
+        if (musicLoop.isPlaying()) musicLoop.stop();
+        else musicLoop.play();
+    }
+
     public FileManager getFileManager() { return fileManager; }
     public Profile getProfile() { return profile; }
     public EntityManager getEntityManager() { return entityManager; }
-
 }

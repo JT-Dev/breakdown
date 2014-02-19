@@ -136,5 +136,11 @@ public class InputManager implements InputProcessor
 
     public float getTouchX(int pointer) { return touchX[pointer]; }
     public float getTouchY(int pointer) { return touchY[pointer]; }
+    public void resetTouch(int pointer)
+    {
+        touchX[pointer] = -1;
+        touchY[pointer] = -1;
+    }
+
     public void setFlipped(boolean flipped) { this.flipped = flipped; }
 }

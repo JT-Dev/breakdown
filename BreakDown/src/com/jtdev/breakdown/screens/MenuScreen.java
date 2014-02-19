@@ -64,14 +64,15 @@ public class MenuScreen implements Screen
             log.log("Play");
             main.setScreen(new GameScreen(main));
         }
-        if (creditButton.isPressed(inputManager))
+        else if (creditButton.isPressed(inputManager))
         {
             log.log("Credits");
             //main.setScreen(new CreditScreen());
         }
-        if (musicButton.isPressed(inputManager))
+        else if (musicButton.isPressed(inputManager))
         {
             log.log("Music");
+            main.getWorld().toggleMusic();
             //main.setScreen(new MusicScreen());
         }
 
@@ -92,6 +93,7 @@ public class MenuScreen implements Screen
     @Override
 	public void show()
     {
+        main.getWorld().toggleMusic();
     }
 
     @Override
