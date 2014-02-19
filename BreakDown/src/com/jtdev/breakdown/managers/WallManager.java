@@ -39,7 +39,7 @@ public class WallManager
         timeOut = Constants.WALL_INITIAL_TIMEOUT;
 
         Texture texture = new Texture(Gdx.files.internal(Constants.WALL_IMAGE_PATH));
-        image = new TextureRegion(texture, Constants.WALL_WIDTH, Constants.WALL_HEIGHT);
+        image = new TextureRegion(texture, Constants.WALL_IMAGE_WIDTH, Constants.WALL_IMAGE_HEIGHT);
     }
 
     public void update()
@@ -60,6 +60,8 @@ public class WallManager
     private void createWall()
     {
         log.log("Making Wall");
+        log.log("Wall array length: " + wallArray.size());
+
         float x,y;
         Wall wall;
         do

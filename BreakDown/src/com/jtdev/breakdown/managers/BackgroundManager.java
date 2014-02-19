@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.jtdev.breakdown.Constants;
 import com.jtdev.breakdown.entities.Background;
 import com.jtdev.breakdown.entities.Cloud;
@@ -28,9 +28,10 @@ public class BackgroundManager
     private Background[] backgrounds;
 
     private TextureRegion[] cloudTextures;
-    private ArrayList<Cloud> clouds;
-    private ArrayList<Cloud> removeClouds;
+    private ArrayList<Cloud> cloudArray;
+    private ArrayList<Cloud> removeCloudArray;
     private Color[] colors;
+    //private long oldTime;
 
     public BackgroundManager()
     {
@@ -55,7 +56,7 @@ public class BackgroundManager
         }
 
         cloudTextures = new TextureRegion[Constants.AMOUNT_OF_CLOUDS];
-        clouds = new ArrayList<Cloud>();
+        cloudArray = new ArrayList<Cloud>();
         for (int i = 0; i < Constants.AMOUNT_OF_CLOUDS; i++)
         {
             Texture texture = new Texture(Gdx.files.internal(Constants.CLOUD_IMAGE_PATH+(i+1)+".png"));
@@ -64,7 +65,7 @@ public class BackgroundManager
             //cloud = new Rectangle(i * Constants.CLOUD_IMAGE_WIDTH, 0, Constants.CLOUD_IMAGE_WIDTH, Constants.CLOUD_IMAGE_HEIGHT);
         }
 
-        removeClouds = new ArrayList<Cloud>();
+        removeCloudArray = new ArrayList<Cloud>();
     }
 
     public void update()
@@ -77,26 +78,53 @@ public class BackgroundManager
             }
             background.addX(-Constants.BACKGROUND_SPEED);
         }
-        if (clouds.size() < Constants.MAX_CLOUDS && MathUtils.random() < Constants.CLOUD_SPAWN_RATE)
+        if (cloudArray.size() < Constants.MAX_CLOUDS && MathUtils.random() < Constants.CLOUD_SPAWN_RATE)
         {
-            log.log("Making cloud");
-            log.log("Clouds array length: " + clouds.size());
-            int i = MathUtils.random(0,cloudTextures.length-1);
-            TextureRegion image = cloudTextures[i];
-            Rectangle rectangle = new Rectangle(Constants.DEVICE_SCREEN_WIDTH,Constants.DEVICE_SCREEN_HEIGHT - (Constants.CLOUD_IMAGE_HEIGHT / 4),
-                                                cloudTextures[i].getRegionWidth(),cloudTextures[i].getRegionHeight());
-            clouds.add(new Cloud(Constants.DEVICE_SCREEN_WIDTH,Constants.DEVICE_SCREEN_HEIGHT - (Constants.CLOUD_IMAGE_HEIGHT / 4),image));
-            //for (int i = 0; i <= backgroundTextures.length-1; i++) batch.draw(backgroundTextures[i],background.getWidth(),Constants.DEVICE_SCREEN_HEIGHT);
+            createCloud();
         }
-        for (Cloud cloud : clouds)
+        for (Cloud cloud : cloudArray)
         {
             cloud.addX(-Constants.CLOUD_SPEED);
             if (cloud.getX() + cloud.getWidth() <= 0)
             {
-                removeClouds.add(cloud);
+                removeCloudArray.add(cloud);
             }
         }
-        for (Cloud cloud : removeClouds) clouds.remove(cloud);
+        for (Cloud cloud : removeCloudArray) cloudArray.remove(cloud);
+    }
+
+    private void createCloud()
+    {
+        log.log("Making cloud");
+        log.log("Clouds array length: " + cloudArray.size());
+
+        int i = MathUtils.random(0,cloudTextures.length-1);
+        TextureRegion image = cloudTextures[i];
+
+        float x,y;
+        Cloud cloud;
+        do
+        {
+            x = MathUtils.random(Constants.DEVICE_SCREEN_WIDTH, Constants.DEVICE_SCREEN_WIDTH + Constants.CLOUD_SPAWN_RANGE);
+            y = Constants.DEVICE_SCREEN_HEIGHT - 20;
+            cloud = new Cloud(x,y,image);
+        }
+        while (collides(cloud));
+
+        cloudArray.add(cloud);
+        //oldTime = TimeUtils.millis();
+    }
+
+    private boolean collides(Cloud cloud)
+    {
+        for (Cloud otherCloud : cloudArray)
+        {
+            if (!cloud.equals(otherCloud))
+            {
+                if (cloud.collides(otherCloud)) return true;
+            }
+        }
+        return false;
     }
 
     public void draw(SpriteBatch batch)
@@ -109,7 +137,7 @@ public class BackgroundManager
                 //batch.draw(background.getTexture(), background.getX(), background.getY(), background.getWidth(), Constants.DEVICE_SCREEN_HEIGHT);
             }
         }
-        for (Cloud cloud : clouds)
+        for (Cloud cloud : cloudArray)
         {
             if (cloud.getX() + cloud.getWidth() > 0 && cloud.getX() < Constants.DEVICE_SCREEN_WIDTH)
             {

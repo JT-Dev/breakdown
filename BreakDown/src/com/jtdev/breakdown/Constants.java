@@ -11,7 +11,7 @@ import com.badlogic.gdx.Input;
  * Time: 10:15 PM
  */
 public class Constants
-{
+{;
     //General options
     public static int DEVICE_SCREEN_WIDTH = Gdx.graphics.getWidth();
     public static int DEVICE_SCREEN_HEIGHT = Gdx.graphics.getHeight();
@@ -46,10 +46,10 @@ public class Constants
 
     //Wall
     public static final String WALL_IMAGE_PATH = "data/wall.png";
-    public static final int WALL_IMAGE_WIDTH = 16;
-    public static final int WALL_IMAGE_HEIGHT = 8;
+    public static final int WALL_IMAGE_WIDTH = 100;
+    public static final int WALL_IMAGE_HEIGHT = 100;
     public static final int WALL_WIDTH = (int) (DEVICE_SCREEN_WIDTH * 0.1);
-    public static final int WALL_HEIGHT = DEVICE_SCREEN_HEIGHT;
+    public static final int WALL_HEIGHT = (int) (DEVICE_SCREEN_HEIGHT * 0.95);
 
     //Button images
     //Play
@@ -78,6 +78,7 @@ public class Constants
     public static final int BACKGROUND_SPEED = 5;
 
     //Clouds options
+    public static final int CLOUD_SPAWN_RANGE = 10000;
     public static final int CLOUD_SPEED = 5;
     public static final double CLOUD_SPAWN_RATE = 0.05;
     public static final int MAX_CLOUDS = 3;

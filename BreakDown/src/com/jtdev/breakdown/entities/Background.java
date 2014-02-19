@@ -18,7 +18,7 @@ public class Background
     public Background(float x, float y, TextureRegion image)
     {
         sprite = new Sprite(image);
-        sprite.setSize(image.getRegionWidth(), image.getRegionHeight());
+        sprite.setSize(image.getRegionWidth(), Constants.DEVICE_SCREEN_HEIGHT);
         sprite.setPosition(x,y);
     }
 

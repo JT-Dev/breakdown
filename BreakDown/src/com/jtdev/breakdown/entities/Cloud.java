@@ -3,6 +3,7 @@ package com.jtdev.breakdown.entities;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.jtdev.breakdown.Constants;
 
 /**
@@ -32,9 +33,15 @@ public class Cloud
         sprite.draw(batch);
     }
 
+    public boolean collides(Cloud otherEntity)
+    {
+        return getRectangle().overlaps(otherEntity.getRectangle());
+    }
+
     public Sprite getSprite() { return sprite; }
     public void setSprite(Sprite sprite) { this.sprite = sprite; }
-    
+    public Rectangle getRectangle() { return sprite.getBoundingRectangle(); }
+
     public float getX() { return sprite.getX(); }
     public float getY() { return sprite.getY(); }
     public void setX(float x) { sprite.setX(x); }
