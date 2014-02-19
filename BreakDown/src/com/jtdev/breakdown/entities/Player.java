@@ -88,13 +88,7 @@ public class Player implements Entity
     public void addY(float y) { setY(getY()+y); }
 
     public float getSpeed() { return speed; }
-    public void setSpeed(float speed)
-    {
-        this.speed = speed;
-        if (this.speed > Constants.PLAYER_MAX_SPEED) this.speed = Constants.PLAYER_MAX_SPEED;
-        if (this.speed < -Constants.PLAYER_MAX_SPEED) this.speed = -Constants.PLAYER_MAX_SPEED;
-        if (this.speed < 0.05 && this.speed > 0.05) this.speed = 0;
-    }
+    public void setSpeed(float speed){ this.speed = speed; }
     public void addSpeed(float speed) { setSpeed(getSpeed() + speed); }
 
     public float getWidth() { return sprite.getWidth(); }
